@@ -1,2 +1,5 @@
-change .env.example to .env
+change ```.env.example``` to ```.env```
+
+```
 docker-compose up -d
+```
