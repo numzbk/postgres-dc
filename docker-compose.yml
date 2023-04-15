@@ -1,21 +1,24 @@
-version: '3'
+version: '3.6'
 
 services:
   postgres:
     container_name: postgres
-    image: postgres:${PG_VERSION}-alpine
+    image: postgres:${PGVERSION}-alpine
     restart: always
-    env_file:
-      - .env
     environment:
-      - POSTGRES_USER=${PG_USER}
-      - POSTGRES_PASSWORD=${PG_PASSWORD}
-      - POSTGRES_HOSTNAME=${PG_HOSTNAME}
-      - POSTGRES_DATABASE=${PG_DATABASE}
+      POSTGRES_PASSWORD: ${PGPASSWORD:-postgres}
+      POSTGRES_DB: ${PGDB:-postgres}
     ports:
-      - "${PG_EXPOSE}:5432"
+      - "${PGEXPOSE:-5432}:5432"
     volumes:
       - db:/var/lib/postgresql/data
+    networks:
+      - backend_network
+
 volumes:
   db:
-    driver: local
+
+
+networks:
+  backend_network:
+    external: true
